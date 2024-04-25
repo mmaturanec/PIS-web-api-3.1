@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PIS.DAL\PIS.DAL.csproj" />
+    <ProjectReference Include="..\PIS.Model\PIS.Model.csproj" />
+    <ProjectReference Include="..\PIS.Repository.Common\PIS.Repository.Common.csproj" />
+    <ProjectReference Include="..\PIS.Repository\PIS.Repository.csproj" />
+  </ItemGroup>
+
+</Project>
