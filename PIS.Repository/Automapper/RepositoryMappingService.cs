@@ -17,7 +17,9 @@ namespace PIS.Repository.Automapper
 			var config = new MapperConfiguration(
 				cfg =>
 				{
-					cfg.CreateMap<PisUsersMmaturanec, UsersDomain>();
+					cfg.CreateMap<PisUsersMmaturanec, UsersDomain>(); //ruta baza - GUI
+					cfg.CreateMap<UsersDomain, PisUsersMmaturanec>(); //ruta GUI - baza
+
 				});
 			mapper = new Mapper(config);
         }

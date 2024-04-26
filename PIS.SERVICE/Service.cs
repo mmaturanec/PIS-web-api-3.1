@@ -16,11 +16,15 @@ namespace PIS.Service
 
         public Service(IRepository repository)
         {
-			repository = _repository;
+			 _repository = repository;
         }
-        public List<PisUsersMmaturanec> GetAllUsers()
+		public string Test()
 		{
-			List<PisUsersMmaturanec> users = _repository.GetAllUsers().ToList();
+			return _repository.Test();
+		}
+		public IEnumerable<UsersDomain> GetAllUsers()
+		{
+			List<UsersDomain> users = _repository.GetAllUsers().ToList();
 
 			if(users == null)
 			{
@@ -34,9 +38,25 @@ namespace PIS.Service
 			}
 		}
 
-		public Task<string> Test()
+		public IEnumerable<PisUsersMmaturanec> GetAllUsersDb()
 		{
-			return "test";
+			IEnumerable<PisUsersMmaturanec> userDb = _repository.GetAllUsersDb();
+			return userDb;
+		}
+
+		IEnumerable<UsersDomain> IService.GetAllUsers()
+		{
+			return _repository.GetAllUsers();
+		}
+
+		public UsersDomain GetUserDomainByUserId(int userId)
+		{
+			return _repository.GetUserDomainByUserId(userId);
+		}
+
+		public async Task<bool> AddUserAsync(UsersDomain userDomain)
+		{
+			return await _repository.AddUserAsync(userDomain);
 		}
 	}
 }

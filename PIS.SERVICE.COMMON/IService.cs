@@ -9,8 +9,10 @@ namespace PIS.Service.Common
 {
 	public interface IService
 	{
-		List<PisUsersMmaturanec> GetAllUsers();
-		Task<string> Test();
-		//List<UserDomain> GetAllUsers();
+		string Test();
+		IEnumerable<UsersDomain> GetAllUsers();
+		IEnumerable<PisUsersMmaturanec> GetAllUsersDb();
+		UsersDomain GetUserDomainByUserId(int userId);
+		Task<bool> AddUserAsync(UsersDomain userDomain);
 	}
 }
