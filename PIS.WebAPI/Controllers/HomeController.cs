@@ -67,36 +67,47 @@ namespace PIS.WebAPI.Controllers
 		[Route("add")]
 		public async Task<IActionResult> AddUserAsync([FromBody] UsersDomain userRest)
 		{
-			try
+			bool lastrequestId = await GetLastUserRequestId();
+
+			if (!lastrequestId)
 			{
-				if (!ModelState.IsValid)
-				{
-					return BadRequest(ModelState);
-				}
-				else
-				{
-					UsersDomain userDomain = new UsersDomain();
-					userDomain.UserLoginName = userRest.UserLoginName;
-					userDomain.UserName = userRest.UserName;
-					userDomain.UserSurname = userRest.UserSurname;
+				return BadRequest("Nije unesen RequestUserId korisnika koji poziva.");
 
-					bool add_user = await _service.AddUserAsync(userDomain);
+			}
+			else
+			{
 
-					if (add_user)
+				try
+				{
+					if (!ModelState.IsValid)
 					{
-
-						return Ok("User dodan!");
+						return BadRequest(ModelState);
 					}
 					else
 					{
-						return Ok("User nije dodan!");
-					}
-				}
+						UsersDomain userDomain = new UsersDomain();
+						userDomain.UserLoginName = userRest.UserLoginName;
+						userDomain.UserName = userRest.UserName;
+						userDomain.UserSurname = userRest.UserSurname;
 
-			}
-			catch (Exception e)
-			{
-				return StatusCode(StatusCodes.Status500InternalServerError, e.ToString());
+						bool add_user = await _service.AddUserAsync(userDomain);
+
+						if (add_user)
+						{
+
+							return Ok("User dodan!");
+						}
+						else
+						{
+							return Ok("User nije dodan!");
+						}
+					}
+
+				}
+				catch (Exception e)
+				{
+					return StatusCode(StatusCodes.Status500InternalServerError, e.ToString());
+				}
 			}
 
 		}
