@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PIS.DAL.DataModel;
 using PIS.Model;
+using PIS.Service;
 using PIS.Service.Common;
 using PIS.WebAPI.RESTModel;
 using System;
@@ -15,15 +16,18 @@ namespace PIS.WebAPI.Controllers
 	public class HomeController : Controller
 	{
 		protected IService _service { get; private set; }
-        public HomeController(IService service)
-        {
-            _service = service;
-        }
+		private int _requestUserId;
+
+		public HomeController(IService service)
+		{
+			_service = service;
+			_requestUserId = -1;
+		}
 		[HttpGet]
 		[Route("test")]
 		public string Test()
 		{
-			return  _service.Test();
+			return _service.Test();
 		}
 		[HttpGet]
 		[Route("Users_db")]
@@ -35,11 +39,22 @@ namespace PIS.WebAPI.Controllers
 		}
 		[HttpGet]
 		[Route("Users")]
-		public List<UsersDomain> GetAllUsers()
+		public async Task<List<UsersDomain>> GetAllUsers()
 		{
-			List<UsersDomain> users = (List<UsersDomain>)_service.GetAllUsers();
+			bool lastrequestId = await GetLastUserRequestId();
 
-			return users;
+			if(!lastrequestId)
+			{
+				return null;
+
+			}
+			else
+			{
+				List<UsersDomain> users = (List<UsersDomain>)_service.GetAllUsers();
+
+				return users;
+			}
+			
 		}
 		[HttpGet]
 		[Route("Users/user_id/{userid}")]
@@ -67,9 +82,9 @@ namespace PIS.WebAPI.Controllers
 
 					bool add_user = await _service.AddUserAsync(userDomain);
 
-					if(add_user)
+					if (add_user)
 					{
-				
+
 						return Ok("User dodan!");
 					}
 					else
@@ -85,6 +100,22 @@ namespace PIS.WebAPI.Controllers
 			}
 
 		}
-     
+		#region AdditionalCustomFunctions
+		public async Task<bool> GetLastUserRequestId()
+		{
+			IHeaderDictionary headers = this.Request.Headers;
+			if (headers.ContainsKey("RequestUserId"))
+			{
+				if (int.TryParse(headers["RequestUserId"].ToString(), out _requestUserId))
+				{
+					//await _service.GetUserDomainByUserId(_requestUserId);
+					return true;
+				}
+				else return false;
+			}
+			return false;
+
+		}
+		#endregion AdditionalCustomFunctions
 	}
 }
