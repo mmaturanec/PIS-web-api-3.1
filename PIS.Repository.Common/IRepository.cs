@@ -14,6 +14,7 @@ namespace PIS.Repository.Common
 		IEnumerable<PisUsersMmaturanec> GetAllUsersDb();
 		UsersDomain GetUserDomainByUserId(int userId);
 		Task<bool> AddUserAsync(UsersDomain userDomain);
+		Task<UsersDomain> IsValidUser(int id);
 		string Test();
 	}
 }

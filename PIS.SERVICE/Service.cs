@@ -58,5 +58,19 @@ namespace PIS.Service
 		{
 			return await _repository.AddUserAsync(userDomain);
 		}
+		#region AdditionalCustomFunctions
+		public async Task<bool> IsValidUser(int id)
+		{
+			UsersDomain user = await _repository.IsValidUser(id);
+			if(user == null)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		#endregion AdditionalCustomFunctions
 	}
 }

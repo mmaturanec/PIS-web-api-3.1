@@ -60,21 +60,28 @@ namespace PIS.Repository
 				return false;
 			}
 		}
-		public async Task<bool> UpdateUserOibAsync(UsersDomain userDomain)
-		{
-			try
-			{
-				PisUsersMmaturanec userDb = appDbContext.PisUsersMmaturanec.Find(userDomain.UserId);
+		//public async Task<bool> UpdateUserOibAsync(UsersDomain userDomain)
+		//{
+		//	try
+		//	{
+		//		PisUsersMmaturanec userDb =await appDbContext.PisUsersMmaturanec.Find(userDomain.UserId);
 
-				if(userDb == null)
-				{
-				}
-					return true;
-			}
-			catch(Exception ex)
-			{
-				return false;
-			}
+		//		if(userDb == null)
+		//		{
+		//		}
+		//			return true;
+		//	}
+		//	catch(Exception ex)
+		//	{
+		//		return false;
+		//	}
+		//}
+
+		public async Task<UsersDomain> IsValidUser(int id)
+		{
+			PisUsersMmaturanec userDb = await appDbContext.PisUsersMmaturanec.FindAsync(id);
+			return _mapper.Map<UsersDomain>(userDb);
+			
 		}
 	}
 }

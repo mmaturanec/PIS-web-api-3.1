@@ -119,8 +119,8 @@ namespace PIS.WebAPI.Controllers
 			{
 				if (int.TryParse(headers["RequestUserId"].ToString(), out _requestUserId))
 				{
-					//await _service.GetUserDomainByUserId(_requestUserId);
-					return true;
+					return await _service.IsValidUser(_requestUserId);
+					//return true;
 				}
 				else return false;
 			}
