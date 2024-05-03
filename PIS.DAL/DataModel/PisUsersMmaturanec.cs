@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PIS.DAL.DataModel
 {
@@ -7,7 +8,7 @@ namespace PIS.DAL.DataModel
     {
         public int UserId { get; set; }
         public string UserLoginName { get; set; }
-        public string UserName { get; set; }
+		public string UserName { get; set; }
         public string UserSurname { get; set; }
         public string UserEmail { get; set; }
         public int? UserLevel { get; set; }

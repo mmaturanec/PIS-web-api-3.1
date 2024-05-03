@@ -54,24 +54,32 @@ namespace PIS.WebAPI.Controllers
 		{
 			try
 			{
-
-				UsersDomain userDomain = new UsersDomain();
-				userDomain.UserLoginName = userRest.UserLoginName;
-				userDomain.UserName = userRest.UserName;
-				userDomain.UserSurname = userRest.UserSurname;
-
-				bool add_user = await _service.AddUserAsync(userDomain);
-
-				if(add_user)
+				if (!ModelState.IsValid)
 				{
-					return Ok("User dodan!");
+					return BadRequest(ModelState);
 				}
 				else
 				{
-					return Ok("User nije dodan!");
+					UsersDomain userDomain = new UsersDomain();
+					userDomain.UserLoginName = userRest.UserLoginName;
+					userDomain.UserName = userRest.UserName;
+					userDomain.UserSurname = userRest.UserSurname;
+
+					bool add_user = await _service.AddUserAsync(userDomain);
+
+					if(add_user)
+					{
+				
+						return Ok("User dodan!");
+					}
+					else
+					{
+						return Ok("User nije dodan!");
+					}
 				}
+
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				return StatusCode(StatusCodes.Status500InternalServerError, e.ToString());
 			}
