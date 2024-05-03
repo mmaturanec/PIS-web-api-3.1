@@ -16,6 +16,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PIS.Service.Common", "PIS.SERVICE.COMMON\PIS.Service.Common.csproj", "{EFB17632-3298-4142-93D5-E6FC78CBFFDC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PIS.WebAPI", "PIS.WebAPI\PIS.WebAPI.csproj", "{7CC60D1A-9363-4992-918F-DB2952A1F854}"
+	ProjectSection(ProjectDependencies) = postProject
+		{59069B4B-0FB7-4DD6-AEC7-55D9868D918A} = {59069B4B-0FB7-4DD6-AEC7-55D9868D918A}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIS.Common", "PIS.Common\PIS.Common.csproj", "{59069B4B-0FB7-4DD6-AEC7-55D9868D918A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +56,10 @@ Global
 		{7CC60D1A-9363-4992-918F-DB2952A1F854}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CC60D1A-9363-4992-918F-DB2952A1F854}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CC60D1A-9363-4992-918F-DB2952A1F854}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59069B4B-0FB7-4DD6-AEC7-55D9868D918A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59069B4B-0FB7-4DD6-AEC7-55D9868D918A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59069B4B-0FB7-4DD6-AEC7-55D9868D918A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59069B4B-0FB7-4DD6-AEC7-55D9868D918A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
-﻿using PIS.DAL.DataModel;
+﻿using PIS.Common;
+using PIS.DAL.DataModel;
 using PIS.Model;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace PIS.Service.Common
 	public interface IService
 	{
 		string Test();
-		IEnumerable<UsersDomain> GetAllUsers();
+		Task<Tuple<IEnumerable<UsersDomain>, List<ErrorMessage>>> GetAllUsers();
 		IEnumerable<PisUsersMmaturanec> GetAllUsersDb();
 		UsersDomain GetUserDomainByUserId(int userId);
 		Task<bool> AddUserAsync(UsersDomain userDomain);

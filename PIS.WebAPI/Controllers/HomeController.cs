@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PIS.Common;
 using PIS.DAL.DataModel;
 using PIS.Model;
 using PIS.Service;
@@ -39,21 +40,11 @@ namespace PIS.WebAPI.Controllers
 		}
 		[HttpGet]
 		[Route("Users")]
-		public async Task<List<UsersDomain>> GetAllUsers()
+		public async Task<Tuple<IEnumerable<UsersDomain>, List<ErrorMessage>>> GetAllUsers()
 		{
-			bool lastrequestId = await GetLastUserRequestId();
+			Tuple<IEnumerable<UsersDomain>, List<ErrorMessage>> result =  await _service.GetAllUsers();
 
-			if(!lastrequestId)
-			{
-				return null;
-
-			}
-			else
-			{
-				List<UsersDomain> users = (List<UsersDomain>)_service.GetAllUsers();
-
-				return users;
-			}
+			return result;
 			
 		}
 		[HttpGet]

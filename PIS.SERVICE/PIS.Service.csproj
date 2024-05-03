@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PIS.Common\PIS.Common.csproj" />
     <ProjectReference Include="..\PIS.SERVICE.COMMON\PIS.Service.Common.csproj" />
   </ItemGroup>
 

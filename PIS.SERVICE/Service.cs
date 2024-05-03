@@ -1,4 +1,5 @@
-﻿using PIS.DAL.DataModel;
+﻿using PIS.Common;
+using PIS.DAL.DataModel;
 using PIS.Model;
 using PIS.Repository.Common;
 using PIS.Service.Common;
@@ -22,31 +23,26 @@ namespace PIS.Service
 		{
 			return _repository.Test();
 		}
-		public IEnumerable<UsersDomain> GetAllUsers()
-		{
-			List<UsersDomain> users = _repository.GetAllUsers().ToList();
+		//public IEnumerable<UsersDomain> GetAllUsers()
+		//{
+		//	List<UsersDomain> users = _repository.GetAllUsers().ToList();
 
-			if(users == null)
-			{
+		//	if(users == null)
+		//	{
 
-				throw new Exception("no users found");
-			}
-			else
-			{ 
-				return users;
+		//		throw new Exception("no users found");
+		//	}
+		//	else
+		//	{ 
+		//		return users;
 
-			}
-		}
+		//	}
+		//}
 
 		public IEnumerable<PisUsersMmaturanec> GetAllUsersDb()
 		{
 			IEnumerable<PisUsersMmaturanec> userDb = _repository.GetAllUsersDb();
 			return userDb;
-		}
-
-		IEnumerable<UsersDomain> IService.GetAllUsers()
-		{
-			return _repository.GetAllUsers();
 		}
 
 		public UsersDomain GetUserDomainByUserId(int userId)
@@ -70,6 +66,12 @@ namespace PIS.Service
 			{
 				return true;
 			}
+		}
+		public async Task<Tuple<IEnumerable<UsersDomain>, List<ErrorMessage>>> GetAllUsers()
+		{
+			List<ErrorMessage> erorMessages = new List<ErrorMessage>();
+			IEnumerable<UsersDomain> usersDomain = _repository.GetAllUsers();
+			return new Tuple<IEnumerable<UsersDomain>, List<ErrorMessage>>(usersDomain, erorMessages);
 		}
 		#endregion AdditionalCustomFunctions
 	}
