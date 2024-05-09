@@ -45,9 +45,24 @@ namespace PIS.Service
 			return userDb;
 		}
 
-		public UsersDomain GetUserDomainByUserId(int userId)
+		public async Task<Tuple<UsersDomain, List<ErrorMessage>>> GetUserDomainByUserId(int userId)
 		{
-			return _repository.GetUserDomainByUserId(userId);
+			//return _repository.GetUserDomainByUserId(userId);
+			List<ErrorMessage> erorMessages = new List<ErrorMessage>();
+			UsersDomain usersDomain =  _repository.GetUserDomainByUserId(userId);
+
+
+			if (usersDomain != null)
+			{
+				erorMessages.Add(new ErrorMessage("Podatci su uredu!"));
+				erorMessages.Add(new ErrorMessage("Podatci su u ispravnom obliku!"));
+			}
+			else
+			{
+				erorMessages.Add(new ErrorMessage("Podatci nisu uredu!"));
+				erorMessages.Add(new ErrorMessage("Podatci nisu u ispravnom obliku!"));
+			}
+			return new Tuple<UsersDomain, List<ErrorMessage>>(usersDomain, erorMessages);
 		}
 
 		public async Task<bool> AddUserAsync(UsersDomain userDomain)
@@ -71,6 +86,16 @@ namespace PIS.Service
 		{
 			List<ErrorMessage> erorMessages = new List<ErrorMessage>();
 			IEnumerable<UsersDomain> usersDomain = _repository.GetAllUsers();
+			if(usersDomain != null)
+			{
+				erorMessages.Add(new ErrorMessage("Podatci su uredu!"));
+				erorMessages.Add(new ErrorMessage("Podatci su u ispravnom obliku!"));
+			}
+			else
+			{
+				erorMessages.Add(new ErrorMessage("Podatci nisu uredu!"));
+				erorMessages.Add(new ErrorMessage("Podatci nisu u ispravnom obliku!"));
+			}
 			return new Tuple<IEnumerable<UsersDomain>, List<ErrorMessage>>(usersDomain, erorMessages);
 		}
 		#endregion AdditionalCustomFunctions

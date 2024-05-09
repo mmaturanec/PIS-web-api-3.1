@@ -9,6 +9,7 @@ using PIS.WebAPI.RESTModel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace PIS.WebAPI.Controllers
@@ -40,19 +41,50 @@ namespace PIS.WebAPI.Controllers
 		}
 		[HttpGet]
 		[Route("Users")]
-		public async Task<Tuple<IEnumerable<UsersDomain>, List<ErrorMessage>>> GetAllUsers()
+		public async Task<IActionResult> GetAllUsers()
 		{
+
+			HttpRequestResponse<IEnumerable<UsersDomain>> response = new HttpRequestResponse<IEnumerable<UsersDomain>>();
+
 			Tuple<IEnumerable<UsersDomain>, List<ErrorMessage>> result =  await _service.GetAllUsers();
 
-			return result;
+			if(result != null)
+			{
+				response.Result = result.Item1;
+				response.ErrorMessages = result.Item2;
+				return Ok(response);
+			}
+			else
+			{
+				response.Result = result.Item1;
+				response.ErrorMessages = result.Item2;
+				return Ok(response);
+			}
+
 			
 		}
 		[HttpGet]
 		[Route("Users/user_id/{userid}")]
-		public UsersDomain GeetUserDomainByUserId(int userId)
+		public  async Task<IActionResult> GetUserDomainByUserId(int userId)
 		{
-			UsersDomain userDomain = _service.GetUserDomainByUserId(userId);
-			return userDomain;
+			HttpRequestResponse<IEnumerable<UsersDomain>> response = new HttpRequestResponse<IEnumerable<UsersDomain>>();
+
+			Tuple<UsersDomain, List<ErrorMessage>> result = await _service.GetUserDomainByUserId(userId);
+
+			if (result != null)
+			{
+				response.Result = result.Item1;
+				response.ErrorMessages = result.Item2;
+				return Ok(response);
+			}
+			else
+			{
+				response.Result = result.Item1;
+				response.ErrorMessages = result.Item2;
+				return Ok(response);
+			}
+			//UsersDomain userDomain = _service.GetUserDomainByUserId(userId);
+			//return userDomain;
 		}
 		[HttpPost]
 		[Route("add")]

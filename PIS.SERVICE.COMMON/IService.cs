@@ -13,7 +13,7 @@ namespace PIS.Service.Common
 		string Test();
 		Task<Tuple<IEnumerable<UsersDomain>, List<ErrorMessage>>> GetAllUsers();
 		IEnumerable<PisUsersMmaturanec> GetAllUsersDb();
-		UsersDomain GetUserDomainByUserId(int userId);
+		Task<Tuple<UsersDomain, List<ErrorMessage>>> GetUserDomainByUserId(int userId);
 		Task<bool> AddUserAsync(UsersDomain userDomain);
 		Task<bool> IsValidUser(int id);
 	}
